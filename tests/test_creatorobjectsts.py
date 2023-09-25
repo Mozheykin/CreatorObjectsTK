@@ -4,6 +4,7 @@ import sys
 sys.path.append(os.getcwd())
 from creatorobjectstk.Window import CreateWindow
 from creatorobjectstk.Button import CreateButton
+from creatorobjectstk.LabelFrame import CreateLabelFrame
 from tkinter import Tk
 
 
@@ -19,9 +20,17 @@ class TestObjects(unittest.TestCase):
                     'text_switch': 'Press,No Press',
                     'colors': 'gray,gray',
                     },
+                "LABELFRAME": {"LF_1": {
+                    'on_what': 'WIN_1',
+                    },},
                             }
                 }
         self.ud = {}
+        self.labelframe = self.pr.get('LABELFRAME')
+        self.name_labelframe = 'LF_1'
+        if self.labelframe is None:
+            return
+        self.pr_labelframe = self.labelframe.get(self.name_labelframe)
         self.window = self.pr.get('WINDOW')
         self.name_window = 'WIN_1'
         if self.window is None:
@@ -33,12 +42,23 @@ class TestObjects(unittest.TestCase):
             return
         self.pr_button = self.button.get(self.name_button)
 
+    def test_create_labelframe(self):
+        self.create_window = CreateWindow(name=self.name_window)
+        if self.pr_window is None:
+            return
+        self.created_window.parse(self.pr_window, self.ud)
+        self.created_labelframe = CreateLabelFrame(name=self.name_labelframe)
+        if self.pr_labelframe is None:
+            return
+        self.created_labelframe.parse(self.pr_labelframe, self.ud)
+        self.created_labelframe.create()
+        self.create_window.create()
+
     def test_created_button(self):
         self.created_window = CreateWindow(name=self.name_window) 
         if self.pr_window is None:
             return
         self.created_window.parse(self.pr_window, self.ud)
-        self.created_window.update(title='None')
         self.created_button = CreateButton(self.name_button)
         if self.pr_button is None:
             return

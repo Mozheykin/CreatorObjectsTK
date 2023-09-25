@@ -2,7 +2,7 @@ import creatorobjectstk
 from creatorobjectstk import MAIN_SETTINGS, ANCHOR, ON_WHAT
 from .parselogic import parse_int, parse_srt, parse_float
 from tkinter import Button, RAISED
-from typing import Callable, Optional
+from typing import Optional
 
 
 
