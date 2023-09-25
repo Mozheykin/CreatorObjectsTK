@@ -40,8 +40,6 @@ class CreateButton(creatorobjectstk.CreateObject):
                     active = -1
                 if kwargs.get('command') is not None:
                     self.command = kwargs.get('command')
-                    if type(self.command) is not Callable:
-                        return
                     self.button = Button(
                         ON_WHAT[self.on_what],
                         bg=self.colors[active],

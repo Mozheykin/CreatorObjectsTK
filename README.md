@@ -7,9 +7,9 @@ CreatorObjectsTK is a module for converting XML instructions into Tkinter classe
 To install the CreatorObjectsTK module, run the following command:
 
  
-pip install https://github.com/Mozheykin/CreatorObjectsTK.git
-or
-poetry add github+https://github.com/Mozheykin/CreatorObjectsTK.git
+pip install git+https://github.com/Mozheykin/CreatorObjectsTK.git\
+or\
+poetry add git+https://github.com/Mozheykin/CreatorObjectsTK.git\
 
 ## Usage
 

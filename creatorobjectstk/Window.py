@@ -1,4 +1,5 @@
 import creatorobjectstk
+from creatorobjectstk import ON_WHAT
 from .parselogic import parse_srt, parse_int
 from tkinter import Tk
 from typing import Optional
@@ -16,21 +17,22 @@ class CreateWindow(creatorobjectstk.CreateObject):
         self.x: int = parse_int(pr, ud, 'relx', 10)
         self.y: int = parse_int(pr, ud, 'rely', 10)
         self.bg: str = parse_srt(pr, ud, 'bg', 'gray')
-        self.window:Optional[Tk] =None
+        self.window:Optional[Tk] = Tk()
+        self.window.title(self.title)
+        self.window.geometry(f'{self.height}x{self.width}')
+        self.window['bg'] = self.bg
+        self.window.protocol('WM_DELETE_WINDOW', self._destroy)
+        self.action = True
+        ON_WHAT[self.name] = self.window
         if creatorobjectstk.OBJECTS.get('WINDOW') is None:
             creatorobjectstk.OBJECTS['WINDOW'] = {self.name: self}
         else:
             creatorobjectstk.OBJECTS['WINDOW'][self.name] = self
 
     def create(self):
-        self.window = Tk()
-        self.window.title(self.title)
-        self.window.geometry(f'{self.height}x{self.width}')
-        self.window['bg'] = self.bg
-        self.window.protocol('WM_DELETE_WINDOW', self._destroy)
-        self.action = True
         if not self.test:
-            self.window.mainloop()
+            if self.window is not None:
+                self.window.mainloop()
         return self.window
 
     def update(self, **kwargs):
@@ -66,6 +68,7 @@ class CreateWindow(creatorobjectstk.CreateObject):
 
     def _destroy(self):
         if self.window is not None:
+            ON_WHAT[self.name] = None
             self.window.destroy()
             self.window = None
         

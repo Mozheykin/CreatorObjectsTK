@@ -15,8 +15,9 @@ class TestObjects(unittest.TestCase):
                     'height': 150},
                     },
                 "BUTTON" : {"BUT_1": {
-                    'interaction': 'WIN_1',
-                    'name': 'Press',
+                    'on_what': 'WIN_1',
+                    'text_switch': 'Press,No Press',
+                    'colors': 'gray,gray',
                     },
                             }
                 }
@@ -32,6 +33,19 @@ class TestObjects(unittest.TestCase):
             return
         self.pr_button = self.button.get(self.name_button)
 
+    def test_created_button(self):
+        self.created_window = CreateWindow(name=self.name_window) 
+        if self.pr_window is None:
+            return
+        self.created_window.parse(self.pr_window, self.ud)
+        self.created_window.update(title='None')
+        self.created_button = CreateButton(self.name_button)
+        if self.pr_button is None:
+            return
+        self.created_button.parse(self.pr_button, self.ud)
+        self.created_button.create(command=self.click)
+        self.created_window.create()
+
     def test_created_window(self):
         self.created_window = CreateWindow(name=self.name_window, test=True) 
         if self.pr_window is None:
@@ -45,13 +59,9 @@ class TestObjects(unittest.TestCase):
         self.assertTrue(self.created_window.action)
         self.assertEqual(type(sl), Tk)
 
-    def test_created_button(self):
-        self.created_window.create()
-        self.created_button = CreateButton(self.name_button)
-        if self.pr_button is None:
-            return
-        self.created_button.parse(self.pr_button, self.ud)
 
+    def click(self):
+        self.created_button.name='Not'
 
 
 
